@@ -203,12 +203,13 @@ window.onload = function(){
   ctx.globalCompositeOperation = "destination-out";
   //按住鼠标事件触发刮奖效果
   can.onmousedown = function() {
-    console.log('moving');
+    //console.log('moving');
     //鼠标移动事件
     can.onmousemove = moving;
   }
 
   can.ontouchstart = function(){
+    //console.log('touchmoving');
     can.ontouchmove = touchmoving;
   }
 
@@ -223,9 +224,9 @@ window.onload = function(){
 
   function touchmoving(e) {
     e = event || e;
-    var x = e.targetTouches[0].pageX;
-    var y = e.targetTouches[0].pageY;
-    console.log(x,y);
+    var x = e.targetTouches[0].clientX;
+    var y = e.targetTouches[0].clientY;
+    //console.log(x,y);
     ctx.beginPath();
     ctx.arc(x, y, 25, 0, Math.PI * 2);
     ctx.fill();
