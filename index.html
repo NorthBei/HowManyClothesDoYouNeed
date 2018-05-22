@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>html5-canvas-finger-lottery-ticket-eraser</title>
+  <title>HowManyClothesDoYouNeed - 刮刮看你有需要多少衣服？</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no , minimum-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
   <meta property="og:title" content="How many clothes do you need ?">
@@ -176,9 +176,9 @@ html,body{
   </div>
   <div id="imgs-wrapper">
     <!-- https://ppt.cc/f48qcx@.jpg -->
-    <img id="front" class="myimg screen-height absolute-h-center" src="./img/上面_resized-min.jpg">
+    <img id="front" class="myimg screen-height absolute-h-center" src="./img/up-min.jpg">
     <!-- https://ppt.cc/fnuY1x@.jpg -->
-    <img id="back" class="myimg screen-height absolute-h-center" src="./img/下面_resized-min.jpg">
+    <img id="back" class="myimg screen-height absolute-h-center" src="">
     <canvas id="canvas" class="screen-height absolute-h-center"></canvas>
   </div>
   <div id="xx">
@@ -191,6 +191,9 @@ html,body{
   
 <script>
 window.onload = function(){
+  var result = Math.random()*10 >= 3 ? "loser" : "winner";
+  document.getElementById("back").setAttribute("src", "./img/bottom-"+result+"-min.jpg");
+  
   var can = document.getElementById("canvas");
 
   var canPosY = can.offsetTop;
