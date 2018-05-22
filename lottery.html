@@ -10,10 +10,6 @@
   <meta property="og:url" content="https://northbei.github.io/HowManyClothesDoYouNeed">
   <meta property="og:image" content="http://northbei.github.io/HowManyClothesDoYouNeed/og/logo.jpg?update=20180513">
 <style>
-@font-face {
-    font-family: adamwarrenpro;
-    src: url('./fonts/adamwarrenpro-bold.ttf');
-}
 html,body{
   width: 100%;
   margin: 0;
@@ -30,53 +26,9 @@ html,body{
   background: black;
 }
 
-#logo{
-  height: 110px;
-  margin: 30px;
-}
-
-#rule{
-  height: 100%;
-  background-image: url(./img/尺標-03.jpg);
-  z-index: 18;
-  background-repeat: repeat-y;
-  background-size: 40px;
-  color: #fff000;
-  display: flex;
-  justify-content: space-between;
-  font-family: adamwarrenpro;
-}
-
-#slogan{
-  position: relative;
-  font-family: adamwarrenpro;
-  color: #fff000;
-  margin: 43px;
-}
-
-#slogan:after {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  background: #ff0;
-  width: 15px;
-  height: 2px;
-}
-
-#slogan div{
-  margin-bottom:10px;
-}
-
 #imgs-wrapper{
   max-width: 100vw;
   flex: 1 0 auto;
-}
-
-#xx{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .absolute-h-center{
@@ -89,62 +41,10 @@ html,body{
   width: auto;
 }
 
-#rule_content{
-  margin-left: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-#rule_content div{
-  padding: 10px 0;
-}
-
-#writer{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  color: #fff000;
-  width: 18vw;
-  margin-left: 4vw;
-  font-size: 14px;
-  line-height: 28px;
-  font-family: 'Heiti TC','微軟正黑體';
-}
-
-#writer span{
-  color: black;
-  background: #fff000;
-  padding: 0 10px;
-  margin-top: 20px;
-}
-
 @media only screen and (max-width: 576px) {
   #body{
     flex-direction: column;
     justify-content: flex-start;
-  }
-  #rule{
-    background: none;
-    order: 2;
-    flex: 1 0 auto;
-  }
-  #rule_content,#slogan{
-    display: none;
-  }
-  #writer{
-    width: 256px;
-    margin: 0 auto;
-  }
-  #xx{
-    order: 1;
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1 0 auto;
   }
   #imgs-wrapper{
     order: 3;
@@ -161,7 +61,7 @@ html,body{
 </style>
 </head>
 <body id="body">
-  <div id="rule">
+  <!-- <div id="rule">
     <div id="rule_content">
       <div>NEED</div>
       <div>WANT</div>
@@ -173,63 +73,73 @@ html,body{
       </div>
       <span>刮刮看你需要幾件衣服？</span>
     </div>
-  </div>
+  </div> -->
   <div id="imgs-wrapper">
     <!-- https://ppt.cc/f48qcx@.jpg -->
-    <img id="front" class="myimg screen-height absolute-h-center" src="./img/上面_resized-min.jpg">
+    <img id="front" class="myimg screen-height absolute-h-center" src="./img/up-min.jpg">
     <!-- https://ppt.cc/fnuY1x@.jpg -->
-    <img id="back" class="myimg screen-height absolute-h-center" src="./img/下面_resized-min.jpg">
+    <img id="back" class="myimg screen-height absolute-h-center" src="">
     <canvas id="canvas" class="screen-height absolute-h-center"></canvas>
   </div>
-  <div id="xx">
+  <!-- <div id="xx">
     <div id="slogan">
       <div>Fast Fashion</div>
       <div>LESS IS MORE</div>
     </div>
     <img id="logo" src="./img/logo-01-min.jpg">
-  </div>
+  </div> -->
   
 <script>
 window.onload = function(){
+  var result = Math.random()*10 >= 3 ? "loser" : "winner";
+  document.getElementById("back").src = "./img/bottom-"+result+"-min.jpg";;
   
-  var can = document.getElementById("canvas");
+  var canvas = document.getElementById("canvas");
 
-  var canPosY = can.offsetTop;
-  //console.log(can.offsetLeft,can.offsetTop);
-  var ctx = can.getContext("2d");
+  var canPosY = canvas.offsetTop;
+  //console.log(canvas.offsetLeft,canvas.offsetTop);
+  var ctx = canvas.getContext("2d");
   //加载图片
   var frontImg = document.getElementById("front");
+
+  var  devicePixelRatio = window.devicePixelRatio || 1,
+    backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1;
+  var ratio = devicePixelRatio / backingStoreRatio;
 
   var height = frontImg.height; 
   var width = frontImg.width;
 
-  can.height = height;
-  can.width = width;
+  // 解決Canvas模糊的問題：https://www.jianshu.com/p/3c223211ca7e
+  canvas.height = height*ratio;
+  canvas.width = width*ratio;
+  canvas.style.height = height + 'px'; 
+  canvas.style.width = width + 'px'; 
+  ctx.scale(ratio, ratio);
 
   ctx.drawImage(frontImg, 0, 0 , width , height);
   //关键--在与源不重叠的区域上保留目标。其他部分都变成透明的。
   ctx.globalCompositeOperation = "destination-out";
   //按住鼠标事件触发刮奖效果
-  can.onmousedown = function() {
+  canvas.onmousedown = function() {
     //console.log('moving');
     //鼠标移动事件
-    can.onmousemove = moving;
+    canvas.onmousemove = moving;
   }
 
-  can.ontouchstart = function(){
+  canvas.ontouchstart = function(){
     //console.log('touchmoving');
     document.getElementById('body').classList.add('overflow-hidden');
-    can.ontouchmove = touchmoving;
+    canvas.ontouchmove = touchmoving;
   }
 
   //松开鼠标事件取消刮奖效果
-  can.onmouseup = function() {
-    can.onmousemove = nomoving;
+  canvas.onmouseup = function() {
+    canvas.onmousemove = nomoving;
   }
 
-  can.ontouchend = function() {
+  canvas.ontouchend = function() {
     document.getElementById('body').classList.remove('overflow-hidden');
-    can.touchmove = nomoving;
+    canvas.touchmove = nomoving;
   }
 
   function touchmoving(e) {
