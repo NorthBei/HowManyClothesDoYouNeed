@@ -61,19 +61,7 @@ html,body{
 </style>
 </head>
 <body id="body">
-  <!-- <div id="rule">
-    <div id="rule_content">
-      <div>NEED</div>
-      <div>WANT</div>
-      <div>MORE</div>
-    </div>
-    <div id="writer">
-      <div>
-      全球每年生產超過八百億件衣服，這些衣服過了流行之後，有四分之三會被當成垃圾燒掉，回收的衣服僅有25％
-      </div>
-      <span>刮刮看你需要幾件衣服？</span>
-    </div>
-  </div> -->
+
   <div id="imgs-wrapper">
     <!-- https://ppt.cc/f48qcx@.jpg -->
     <img id="front" class="myimg screen-height absolute-h-center" src="./img/up-min.jpg">
@@ -81,17 +69,10 @@ html,body{
     <img id="back" class="myimg screen-height absolute-h-center" src="">
     <canvas id="canvas" class="screen-height absolute-h-center"></canvas>
   </div>
-  <!-- <div id="xx">
-    <div id="slogan">
-      <div>Fast Fashion</div>
-      <div>LESS IS MORE</div>
-    </div>
-    <img id="logo" src="./img/logo-01-min.jpg">
-  </div> -->
   
 <script>
 window.onload = function(){
-  var result = Math.random()*10 >= 3 ? "loser" : "winner";
+  var result = Math.random()*10 >= 4 ? "loser" : "winner";
   document.getElementById("back").src = "./img/bottom-"+result+"-min.jpg";;
   
   var canvas = document.getElementById("canvas");
